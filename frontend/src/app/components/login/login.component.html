@@ -1,0 +1,20 @@
+<div class="login-page">
+  <div class="login-card">
+    <div class="brand-icon">CF</div>
+    <h2 class="title">Clínica Fisio & Pilates</h2>
+    <h4 class="subtitle">Acesso ao Sistema</h4>
+
+    <form (ngSubmit)="onLogin()">
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" [(ngModel)]="credentials.email" placeholder="digite@email.com" required />
+      </div>
+      <div class="form-group">
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" name="senha" [(ngModel)]="credentials.senha" placeholder="Digite sua senha" required />
+      </div>
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+      <button type="submit" class="btn-primary">Entrar no Sistema</button>
+    </form>
+  </div>
+</div>

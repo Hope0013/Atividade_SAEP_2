@@ -1,0 +1,111 @@
+<app-nav></app-nav>
+
+<main class="container">
+  <section class="form-centered">
+    <h3>{{ editando ? 'Editar Cliente' : 'Novo Cliente' }}</h3>
+
+    <form (ngSubmit)="salvar()">
+      <div class="form-group">
+        <label for="nome">Nome do Cliente</label>
+        <input
+          type="text"
+          id="nome"
+          name="nome"
+          [(ngModel)]="clienteForm.nome"
+          placeholder="Digite o nome do cliente"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="documento">Documento (CPF)</label>
+        <input
+          type="text"
+          id="documento"
+          name="documento"
+          [(ngModel)]="clienteForm.documento"
+          placeholder="000.000.000-00"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="telefone">Telefone</label>
+        <input
+          type="text"
+          id="telefone"
+          name="telefone"
+          [(ngModel)]="clienteForm.telefone"
+          placeholder="(00) 00000-0000"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          [(ngModel)]="clienteForm.email"
+          placeholder="exemplo@email.com"
+        />
+      </div>
+
+      <div *ngIf="erroCadastro" class="error-message">
+        {{ erroCadastro }}
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">
+          {{ editando ? 'Atualizar' : 'Salvar' }}
+        </button>
+        <button
+          *ngIf="editando"
+          type="button"
+          class="btn-secondary"
+          (click)="limparForm()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <section class="card">
+    <div class="list-header">
+      <h3>Clientes Cadastrados</h3>
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Buscar por nome ou documento..."
+        [(ngModel)]="termoBusca"
+        [ngModelOptions]="{standalone: true}"
+        (ngModelChange)="carregarClientes()"
+      />
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Documento</th>
+          <th>Telefone</th>
+          <th>E-mail</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of clientes">
+          <td>{{ c.nome }}</td>
+          <td>{{ c.documento }}</td>
+          <td>{{ c.telefone }}</td>
+          <td>{{ c.email }}</td>
+          <td class="actions-cell">
+            <button class="btn-link" (click)="editar(c)">Editar</button>
+          </td>
+        </tr>
+        <tr *ngIf="clientes.length === 0">
+          <td colspan="5" class="empty-message">Nenhum cliente cadastrado.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</main>

@@ -1,0 +1,75 @@
+.navbar {
+  background: #0f172a;
+  color: #ffffff;
+  padding: 14px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.nav-brand-group {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.brand-title {
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand-title::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  display: inline-block;
+}
+
+.nav-link {
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 2px;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.nav-link:hover {
+  color: #ffffff;
+}
+
+.nav-link.active,
+.nav-link:hover {
+  border-bottom-color: var(--color-primary);
+}
+
+.nav-user-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 13px;
+  color: #cbd5e1;
+}
+
+.btn-logout {
+  padding: 7px 16px;
+  background: transparent;
+  color: #f87171;
+  border: 1px solid #7f1d1d;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 13px;
+  transition: background-color 0.15s;
+}
+
+.btn-logout:hover {
+  background: rgba(239, 68, 68, 0.12);
+}

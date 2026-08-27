@@ -1,0 +1,14 @@
+<link rel="stylesheet" href="nav.component.css">
+<nav class="navbar">
+  <div class="nav-brand-group">
+    <strong class="brand-title">Clínica Fisio & Pilates</strong>
+    <a routerLink="/clientes" routerLinkActive="active" class="nav-link">Gestão de Clientes</a>
+    <a routerLink="/agendamentos" routerLinkActive="active" class="nav-link">Agendamentos</a>
+  </div>
+  <div class="nav-user-group">
+    <span>Usuário Logado: <strong>{{ usuarioNome }}</strong></span>
+    <button type="button" (click)="onLogout()" class="btn-logout">
+      Sair (Logout)
+    </button>
+  </div>
+</nav>

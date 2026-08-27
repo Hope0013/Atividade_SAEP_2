@@ -1,0 +1,104 @@
+<link rel="stylesheet" href="agendamento.component.css">
+
+<app-nav></app-nav>
+
+<main class="container">
+  <h2>Gestão de Agendamentos</h2>
+
+  <section class="card">
+    <h3>Novo Agendamento</h3>
+
+    <form (ngSubmit)="agendar()">
+
+      <div class="form-group">
+        <label for="cliente_id">Cliente</label>
+        <select
+          id="cliente_id"
+          name="cliente_id"
+          [(ngModel)]="formAgendamento.cliente_id"
+          required
+        >
+          <option value="">Selecione um cliente...</option>
+          <option *ngFor="let c of clientes" [value]="c.id">
+            {{ c.nome }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Seleção de Recurso / Aparelho -->
+      <div class="form-group">
+        <label for="recurso_id">Recurso / Serviço</label>
+        <select
+          id="recurso_id"
+          name="recurso_id"
+          [(ngModel)]="formAgendamento.recurso_id"
+          required
+        >
+          <option value="">Selecione um recurso...</option>
+          <option *ngFor="let r of recursos" [value]="r.id">
+            {{ r.nome }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <!-- Data -->
+        <div class="form-group">
+          <label for="data_agendamento">Data</label>
+          <input
+            type="date"
+            id="data_agendamento"
+            name="data_agendamento"
+            [(ngModel)]="formAgendamento.data_agendamento"
+            required
+          />
+        </div>
+
+        <!-- Hora -->
+        <div class="form-group">
+          <label for="hora_agendamento">Horário</label>
+          <input
+            type="time"
+            id="hora_agendamento"
+            name="hora_agendamento"
+            [(ngModel)]="formAgendamento.hora_agendamento"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Alerta de Erro -->
+      <div *ngIf="alertaErro" class="error-message">
+        {{ alertaErro }}
+      </div>
+
+      <button type="submit" class="btn-primary">Agendar Sessão</button>
+    </form>
+  </section>
+
+  <!-- Listagem do Banco -->
+  <section class="card">
+    <h3>Sessões Agendadas</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>Recurso</th>
+          <th>Data</th>
+          <th>Horário</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let a of agendamentos">
+          <td>{{ a.cliente_nome || a.cliente_id }}</td>
+          <td>{{ a.recurso_nome || a.recurso_id }}</td>
+         <td>{{ formatarData(a.data_agendamento) }}</td>
+          <td>{{ formatarHora(a.hora_agendamento) }}</td>
+        </tr>
+        <tr *ngIf="agendamentos.length === 0">
+          <td colspan="4" class="empty-message">Nenhum agendamento cadastrado.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</main>
