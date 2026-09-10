@@ -15,10 +15,12 @@ import { NavComponent } from '../nav/nav.component';
   styleUrl: './agendamento.component.css',
 })
 export class AgendamentosComponent implements OnInit {
+  // Listas que vão guardar as informações vindas do banco de dados
   agendamentos: any[] = [];
   clientes: any[] = [];
   recursos: any[] = [];
 
+  // Objeto para armazenar as opções que o usuário escolher no formulário
   formAgendamento = {
     cliente_id: '',
     recurso_id: '',
@@ -26,8 +28,10 @@ export class AgendamentosComponent implements OnInit {
     hora_agendamento: '',
   };
 
+  // Variável para exibir mensagens de erro na tela
   alertaErro: string = '';
 
+  // Serviços de API e o detector de alterações do Angular
   constructor(
     private agendamentoService: AgendamentoService,
     private clienteService: ClienteService,
@@ -35,12 +39,14 @@ export class AgendamentosComponent implements OnInit {
     private cdr: ChangeDetectorRef,
   ) {}
 
+  // Executado assim que o componente é exibido no navegador
   ngOnInit(): void {
     this.carregarAgendamentos();
     this.carregarClientes();
     this.carregarRecursos();
   }
 
+  // Busca todos os agendamentos
   carregarAgendamentos(): void {
     this.agendamentoService.getAgendamentos().subscribe((data) => {
       this.agendamentos = data;
@@ -48,6 +54,7 @@ export class AgendamentosComponent implements OnInit {
     });
   }
 
+  // Busca clientes
   carregarClientes(): void {
     this.clienteService.getCliente().subscribe((data) => {
       this.clientes = data;
@@ -55,6 +62,7 @@ export class AgendamentosComponent implements OnInit {
     });
   }
 
+  // Busca os recursos
   carregarRecursos(): void {
     this.recursoService.getRecursos().subscribe((data) => {
       this.recursos = data;
@@ -62,19 +70,24 @@ export class AgendamentosComponent implements OnInit {
     });
   }
 
+  // Funcão para formatar a data
   formatarData(data: string): string {
     if (!data) return '';
-    const dataPura = data.substring(0, 10); 
+    const dataPura = data.substring(0, 10);
     const [ano, mes, dia] = dataPura.split('-');
     return `${dia}/${mes}/${ano}`;
   }
 
+  // Função para formatar a hora
   formatarHora(hora: string): string {
     if (!hora) return '';
     return hora.substring(0, 5); // "14:00:00" -> "14:00"
   }
+
+  // Função ativa apos o envio do formulario
   agendar(): void {
     this.alertaErro = '';
+    // Impede que o usuario deixe campos vazios
     if (
       !this.formAgendamento.cliente_id ||
       !this.formAgendamento.recurso_id ||
@@ -94,8 +107,11 @@ export class AgendamentosComponent implements OnInit {
           data_agendamento: '',
           hora_agendamento: '',
         };
+        // Atualiza a tela
         this.carregarAgendamentos();
       },
+
+      // Mensagem de erro caso o agendamento de erro
       error: (err) => {
         this.alertaErro = err.error?.error || 'Erro ao agendar.';
         this.cdr.detectChanges();

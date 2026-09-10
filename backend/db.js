@@ -1,3 +1,5 @@
+// Conexão com o BD
+
 const { Pool } = require('pg');
 
 const pool = new Pool({
